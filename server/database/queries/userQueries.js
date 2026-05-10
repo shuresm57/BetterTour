@@ -1,34 +1,36 @@
 import db from '../connection.js';
 
-export function createUser(userData){
+export function findByEmail (email) {
+  return db.prepare(`
+    SELECT * 
+    FROM users 
+    WHERE email = ?
+    `).get(email);
+}
 
-    const { email, password } = userData;
+export function findArtistByUserId (userId) {
+  return db.prepare(`
+    SELECT artist.* 
+    FROM artist 
+    JOIN artist_user ON artist_user.artist_id = artist.artist_id 
+    WHERE artist_user.user_id = ?
+    `).get(userId);
+}
 
-    db.prepare(`
-        INSERT INTO user (email, pass)
-        VALUES (?, ?);
+export function findVenueByUserId (userId) {
+  return db.prepare(`
+    SELECT venue.* 
+    FROM venue 
+    JOIN venue_user ON venue_user.venue_id = venue.venue_id 
+    WHERE venue_user.user_id = ?
+    `).get(userId);
+}
+
+export function createUser(userData) {
+  const { email, password } = userData;
+
+  return db.prepare(`
+    INSERT INTO user (email, password_hash)
+    VALUES (?, ?);
     `).run(email, password);
-
-};
-
-export function createArtistUser(artistUserDate){
-
-    const { artistId, userId, role }
-
-    db.prepare(`
-        INSERT INTO artist_user (artist_id, user_id, role)
-        VALUES (?, ?, ?);
-    `).run(artistId, userId, role);
-
-};
-
-export function createVenueUser(artistUserDate){
-
-    const { venueId, userId, role }
-
-    db.prepare(`
-        INSERT INTO venue_user (venue_id, user_id, role)
-        VALUES (?, ?, ?);
-    `).run(venueId, userId, role);
-
-};
+}

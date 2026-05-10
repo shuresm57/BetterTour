@@ -6,22 +6,22 @@ export function getShowLinkCode(linkCode) {
     `).run(linkCode);
 }
 
-export function getShowParticipants(showId) {
+
+export function updateShow (showId, showData) {
+  const { date, schedule, eventName, contactOfDay, status } = showData;
+
   return db.prepare(`
-    SELECT sp.role, sp.joined_at, u.email, a.artist_name, v.venue_name
-    FROM show_participant sp
-    JOIN user u ON sp.user_id = u.user_id
-    LEFT JOIN artist a ON sp.artist_id = a.artist_id
-    LEFT JOIN venue v ON sp.venue_id = v.venue_id
-    WHERE sp.show_id = ?
-  `).all(showId);
-};
+    UPDATE show
+    SET date = ?, schedule = ?, event_name = ?, contact_of_day = ?, status = ?
+    WHERE show_id = ?;
+    `).run(date, schedule, eventName, contactOfDay, status, showId);
+}
 
 export function createShow(showData) {
      const {
         date, schedule, eventName,
         contactOfDay, status
-    }
+    } = showData;
 
     return db.prepare(`
         INSERT INTO show (date, schedule, event_name, contact_of_day, status)

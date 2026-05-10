@@ -16,6 +16,16 @@ export function getVenueRider (venueId) {
     `).run(venueId);
 }
 
+export function updateRider (riderId, riderData) {
+  const { riderName, riderUrl } = riderData;
+
+  return db.prepare(`
+    UPDATE rider
+    SET rider_name = ?, rider_url = ?
+    WHERE rider_id = ?;
+    `).run(riderName, riderUrl, riderId);
+}
+
 export function createArtistRider (artistRiderData) {
   const { artistId, riderName, riderUrl } = artistRiderData;
 
