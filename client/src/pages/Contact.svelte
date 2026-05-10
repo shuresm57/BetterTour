@@ -1,0 +1,36 @@
+  <svelte:head>
+    <title>BetterTour | Contact</title>
+  </svelte:head>
+
+  <div class="relative isolate flex-1 flex flex-col justify-center items-center gap-6 pb-76">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 top-0 -z-10 transform-gpu overflow-hidden blur-3xl">
+      <div style="clip-path: polygon(0% 20%, 60% 39%, 60% 0%, 76% 35%, 61% 62%, 44% 34%, 0% 80%);" class="relative left-[calc(20%-5rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[60deg] bg-gradient-to-tr from-[#2563eb] to-[#93c5fd] opacity-50"></div>
+    </div>
+    <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 bottom-0 -z-10 transform-gpu overflow-hidden blur-3xl">
+      <div style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)" class="relative left-[calc(50%+10rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#1d4ed8] to-[#3b82f6] opacity-20"></div>
+    </div>
+    <div class="text-center">
+      <h1 class="text-5xl font-bold text-white">Get in touch</h1>
+      <p class="text-gray-400 mt-2 text-lg">We love fan mail.</p>
+    </div>
+    <div class="card preset-filled-surface-100-900 rounded-xl border border-blue-500 p-8 w-full max-w-md space-y-4">
+     
+
+      <label class="label">
+        <span class="text-blue-300">Name</span>
+        <input class="input border-blue-500 focus:ring-blue-500" type="text" placeholder="Your name" />
+      </label>
+
+      <label class="label">
+        <span class="text-blue-300">Email</span>
+        <input class="input border-blue-500 focus:ring-blue-500" type="email" placeholder="you@example.com" />
+      </label>
+
+      <label class="label">
+        <span class="text-blue-300">Message</span>
+        <textarea class="textarea border-blue-500 focus:ring-blue-500" rows="4" placeholder="Your message..."></textarea>
+      </label>
+
+      <button class="btn bg-blue-500 hover:bg-blue-400 text-white w-full font-bold py-4">Send</button>
+    </div>
+  </div>
