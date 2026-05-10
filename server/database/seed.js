@@ -26,23 +26,19 @@ for (const u of users) insertUser.run(u.email, userPassword);
 //= ======================
 
 const insertArtist = db.prepare(`
-    INSERT INTO artist (artist_name, bio, tech_rider_url, hospitality_rider_url, contact_email) 
-    VALUES (?, ?, ?, ?, ?)
+    INSERT INTO artist (artist_name, bio, contact_email)
+    VALUES (?, ?, ?)
 `);
 
 const eyesBand = {
   artist_name: 'Eyes',
   bio: 'A hardcore punk band from Copenhagen',
-  tech_rider_url: 'https://docs.google.com/document/d/1NDmTZERWDT9aAUpNqTS-TfJjn5Ee2SZlTD9Po4n8-rI/edit?tab=t.0',
-  hospitality_rider_url: 'https://docs.google.com/document/d/1NDmTZERWDT9aAUpNqTS-TfJjn5Ee2SZlTD9Po4n8-rI/edit?tab=t.0',
   contact_email: 'kenn@eyes.dk'
 };
 
 const sylBand = {
   artist_name: 'Syl',
   bio: 'Post-Hardcore Punk',
-  tech_rider_url: 'https://docs.google.com/document/d/1NDmTZERWDT9aAUpNqTS-TfJjn5Ee2SZlTD9Po4n8-rI/edit?tab=t.0',
-  hospitality_rider_url: 'https://docs.google.com/document/d/1NDmTZERWDT9aAUpNqTS-TfJjn5Ee2SZlTD9Po4n8-rI/edit?tab=t.0',
   contact_email: 'ben@syl.dk'
 };
 
@@ -50,8 +46,6 @@ const sylBand = {
 insertArtist.run(
   eyesBand.artist_name,
   eyesBand.bio,
-  eyesBand.tech_rider_url,
-  eyesBand.hospitality_rider_url,
   eyesBand.contact_email
 );
 
@@ -59,8 +53,6 @@ insertArtist.run(
 insertArtist.run(
   sylBand.artist_name,
   sylBand.bio,
-  sylBand.tech_rider_url,
-  sylBand.hospitality_rider_url,
   sylBand.contact_email
 );
 
@@ -69,16 +61,14 @@ insertArtist.run(
 //= ======================
 
 const insertVenue = db.prepare(`
-    INSERT INTO venue (venue_name, address, bio, tech_rider_url, hospitality_rider_url, contact_email) 
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO venue (venue_name, address, bio, contact_email)
+    VALUES (?, ?, ?, ?)
 `);
 
 const urban13Venue = {
   venue_name: 'Urban13',
   address: 'Bispeengen 20, 2000 Frederiksberg',
   bio: 'GARAGEN er URBAN 13s største venue – anlagt i 2019 og skabt til at rumme både vellydende koncerter, stemningsfulde fester og alt derimellem. Her er der højt til loftet, rå rammer og masser af fleksibilitet.',
-  tech_rider_url: 'https://docs.google.com/document/d/1NDmTZERWDT9aAUpNqTS-TfJjn5Ee2SZlTD9Po4n8-rI/edit?tab=t.0',
-  hospitality_rider_url: 'https://docs.google.com/document/d/1NDmTZERWDT9aAUpNqTS-TfJjn5Ee2SZlTD9Po4n8-rI/edit?tab=t.0',
   contact_email: 'prod@urban13.dk'
 };
 
@@ -86,8 +76,6 @@ const trainVenue = {
   venue_name: 'Train',
   address: 'Toldbodgade 6, 8000 Aarhus C',
   bio: 'TRAIN er et af Aarhus mest markante spillesteder og har siden 1998 præsenteret nationale og internationale artister inden for rock, pop, elektronisk, urban og metal. Med fokus på kvalitet, udvikling og stærke koncertoplevelser fungerer TRAIN som et centralt musikalsk kraftcenter i byen.',
-  tech_rider_url: 'https://cdn.sanity.io/files/zr3nrpl4/production/f2eb0654d3ec368db3e99c5be02a9e4e749fa7b1.pdf',
-  hospitality_rider_url: 'https://cdn.sanity.io/files/zr3nrpl4/production/f2eb0654d3ec368db3e99c5be02a9e4e749fa7b1.pdf',
   contact_email: 'prod@train.dk'
 };
 
@@ -96,8 +84,6 @@ insertVenue.run(
   urban13Venue.venue_name,
   urban13Venue.address,
   urban13Venue.bio,
-  urban13Venue.tech_rider_url,
-  urban13Venue.hospitality_rider_url,
   urban13Venue.contact_email
 );
 
@@ -106,9 +92,80 @@ insertVenue.run(
   trainVenue.venue_name,
   trainVenue.address,
   trainVenue.bio,
-  trainVenue.tech_rider_url,
-  trainVenue.hospitality_rider_url,
   trainVenue.contact_email
+);
+
+//= ======================
+//       RIDERS
+//= ======================
+
+const insertRider = db.prepare(`
+    INSERT INTO rider (artist_id, venue_id, rider_name, rider_url)
+    VALUES (?, ?, ?, ?)
+`);
+
+// Eyes - tech rider (artist_id: 1)
+insertRider.run(
+  1,
+  null,
+  'Tech Rider',
+  'https://docs.google.com/document/d/1NDmTZERWDT9aAUpNqTS-TfJjn5Ee2SZlTD9Po4n8-rI/edit?tab=t.0'
+);
+
+// Eyes - hospitality rider (artist_id: 1)
+insertRider.run(
+  1,
+  null,
+  'Hospitality Rider',
+  'https://docs.google.com/document/d/1NDmTZERWDT9aAUpNqTS-TfJjn5Ee2SZlTD9Po4n8-rI/edit?tab=t.0'
+);
+
+// Syl - tech rider (artist_id: 2)
+insertRider.run(
+  2,
+  null,
+  'Tech Rider',
+  'https://docs.google.com/document/d/1NDmTZERWDT9aAUpNqTS-TfJjn5Ee2SZlTD9Po4n8-rI/edit?tab=t.0'
+);
+
+// Syl - hospitality rider (artist_id: 2)
+insertRider.run(
+  2,
+  null,
+  'Hospitality Rider',
+  'https://docs.google.com/document/d/1NDmTZERWDT9aAUpNqTS-TfJjn5Ee2SZlTD9Po4n8-rI/edit?tab=t.0'
+);
+
+// Urban13 - tech rider (venue_id: 1)
+insertRider.run(
+  null,
+  1,
+  'Tech Rider',
+  'https://docs.google.com/document/d/1NDmTZERWDT9aAUpNqTS-TfJjn5Ee2SZlTD9Po4n8-rI/edit?tab=t.0'
+);
+
+// Urban13 - hospitality rider (venue_id: 1)
+insertRider.run(
+  null,
+  1,
+  'Hospitality Rider',
+  'https://docs.google.com/document/d/1NDmTZERWDT9aAUpNqTS-TfJjn5Ee2SZlTD9Po4n8-rI/edit?tab=t.0'
+);
+
+// Train - tech rider (venue_id: 2)
+insertRider.run(
+  null,
+  2,
+  'Tech Rider',
+  'https://cdn.sanity.io/files/zr3nrpl4/production/f2eb0654d3ec368db3e99c5be02a9e4e749fa7b1.pdf'
+);
+
+// Train - hospitality rider (venue_id: 2)
+insertRider.run(
+  null,
+  2,
+  'Hospitality Rider',
+  'https://cdn.sanity.io/files/zr3nrpl4/production/f2eb0654d3ec368db3e99c5be02a9e4e749fa7b1.pdf'
 );
 
 //= ======================
