@@ -1,3 +1,33 @@
+  <script>
+  import { toast } from 'svelte-sonner';
+  import { Progress } from '@skeletonlabs/skeleton-svelte';
+  import { fetchPost } from '../util/fetchUtil.js';
+
+  let name = $state('');
+  let email = $state('');
+  let message = $state('');
+  let submitting = $state(false);
+
+  async function handleContact() {
+    if (!name || !email || !message) {
+      toast.error('Please fill in all fields.');
+      return;
+    }
+    submitting = true;
+    const response = await fetchPost('/api/contact', { name, email, message });
+    submitting = false;
+
+    if (response?.ok) {
+      toast.success('Message sent!');
+      name = '';
+      email = '';
+      message = '';
+    } else {
+      toast.error('Failed to send message. Try again later.');
+    }
+  }
+</script>
+  
   <svelte:head>
     <title>BetterTour | Contact</title>
   </svelte:head>
@@ -18,19 +48,22 @@
 
       <label class="label">
         <span class="text-blue-300 text-xl">Name</span>
-        <input class="input border-blue-500 focus:ring-blue-500 text-xl" type="text" placeholder="Your name" />
+        <input class="input border-blue-500 focus:ring-blue-500 text-xl" type="text" placeholder="Your name" bind:value={name}/>
       </label>
 
       <label class="label">
         <span class="text-blue-300 text-xl">Email</span>
-        <input class="input border-blue-500 focus:ring-blue-500 text-xl" type="email" placeholder="you@example.com" />
+        <input class="input border-blue-500 focus:ring-blue-500 text-xl" type="email" placeholder="you@example.com" bind:value={email}/>
       </label>
 
       <label class="label">
         <span class="text-blue-300 text-xl">Message</span>
-        <textarea class="textarea border-blue-500 focus:ring-blue-500 text-xl" rows="4" placeholder="Your message..."></textarea>
+        <textarea class="textarea border-blue-500 focus:ring-blue-500 text-xl" rows="4" placeholder="Your message..." bind:value={message}></textarea>
       </label>
 
-      <button class="btn bg-blue-500 hover:bg-blue-400 text-white w-full font-bold py-4 text-xl">Send</button>
+      <button class="btn bg-blue-500 hover:bg-blue-400 text-white w-full font-bold py-4 text-xl" disabled={submitting} onclick={handleContact}>{submitting ? 'Sending...' : 'Send'}</button>
+      {#if submitting}
+        <Progress value={null}><Progress.Track><Progress.Range /></Progress.Track></Progress>
+      {/if}
     </div>
   </div>

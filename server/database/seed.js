@@ -1,3 +1,4 @@
+import './initDatabase.js';
 import db from './connection.js';
 import { hashPassword } from '../util/passwordUtil.js';
 
@@ -8,7 +9,7 @@ import { hashPassword } from '../util/passwordUtil.js';
 const userPassword = await hashPassword('test1234');
 
 const insertUser = db.prepare(`
-    INSERT INTO user (email, password) 
+    INSERT INTO user (email, password_hash)
     VALUES (?, ?)
 `);
 

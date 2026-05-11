@@ -1,4 +1,6 @@
 import nodemailer from 'nodemailer';
+import { emailTemplate } from './emailTemplate.js';
+
 const testAccount = await nodemailer.createTestAccount();
 
 const transporter = nodemailer.createTransport({
@@ -11,50 +13,54 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-export async function sendWelcomeEmail (email, username) {
+export async function sendWelcomeEmail(email, username) {
   const info = await transporter.sendMail({
-    from: '"Rachet and Clank FanClub" <info@rcfc.com>',
-    to: `${email}`,
-    subject: 'Welcome to the Fanclub!',
-    text:
-        `
-        Welcome ${username}!
-        We are so happy you wanted to join our club!
-        `,
-    html:
-        `
-        <h1>Welcome ${username}!</h1>
-
-        <p>We are so happy you wanted to join our club!</p>
-        
-        `
+    from: '"BetterTour" <info@bettertour.com>',
+    to: email,
+    subject: 'Welcome to BetterTour!',
+    text: `Welcome ${username}! We are so happy you joined BetterTour.`,
+    html: emailTemplate({
+      title: `Welcome, ${username}!`,
+      body: `<p>We're so happy you joined BetterTour.</p>
+             <p>You can now log in and set up your profile.</p>`
+    })
   });
 
   console.log('Message sent: %s', info.messageId);
   console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 }
 
-export async function sendPasswordRecoveryEmail (email, name, link) {
+export async function sendPasswordRecoveryEmail(email, name, link) {
   const info = await transporter.sendMail({
-    from: '"Rachet and Clank FanClub" <info@rcfc.com>',
-    to: `${email}`,
+    from: '"BetterTour" <info@bettertour.com>',
+    to: email,
     subject: 'Password Recovery',
-    text:
-     `
-        Hi ${name}!
+    text: `Hi ${name}! Reset your password here: ${link} (valid for 15 minutes)`,
+    html: emailTemplate({
+      title: `Hi ${name}, reset your password`,
+      body: `<p>You requested a password reset. Click the button below to proceed.</p>
+             <p style="color:#64748b;font-size:14px;">This link expires in 15 minutes.</p>`,
+      buttonText: 'Reset Password',
+      buttonUrl: link
+    })
+  });
 
-        You requested to reset your password, click the link below to proceed.
-        The link is valid for 15 minutes
-        ${link}
-        `,
-    html:
-        `
-        <h1>Hi ${name}!</h1>
+  console.log('Message sent: %s', info.messageId);
+  console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+}
 
-        <p>You requested to reset your password, click the link below to proceed.</p>
-        <p>The link is valid for 15 minutes</p>
-        <a href=${link}>Click me<a>
-        `
+export async function sendContactEmail(name, email, message) {
+  const info = await transporter.sendMail({
+    from: '"BetterTour" <info@bettertour.com>',
+    to: 'info@bettertour.com',
+    replyTo: email,
+    subject: `Contact form — ${name}`,
+    text: `From: ${name} <${email}>\n\n${message}`,
+    html: emailTemplate({
+      title: `Message from ${name}`,
+      body: `<p><strong style="color:#f1f5f9;">From:</strong> ${name} &lt;${email}&gt;</p>
+             <p style="white-space:pre-wrap;">${message}</p>`
+    })
   });
 
   console.log('Message sent: %s', info.messageId);

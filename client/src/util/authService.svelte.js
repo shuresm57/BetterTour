@@ -44,17 +44,21 @@ export async function handleSignup (email, username, passwordOne, passwordTwo, o
   }
 }
 
-export async function handleLogin (username, password) {
-  const response = await fetchPost('/api/login', { username, password });
+export async function handleLogin (email, password) {
+  const response = await fetchPost('/api/login', { email, password });
   if (!response) {
     toast.error('Error logging in. Try again later.');
     return;
   }
   const message = await response.text();
   if (response.ok) {
-    userStore.user = { username };
+    const homeRes = await(fetchGet('/api/home'));
+    if (homeRes?.ok) {
+      const { data, type } = await homeRes.json();
+      userStore.user = { ...data, type };
+      window.location.href = type === 'artist' ? '/dashboard/artist' : '/dashboard/venue';
+    }
     toast.success(message);
-    window.location.href = '/home';
   } else {
     toast.error(message);
   }

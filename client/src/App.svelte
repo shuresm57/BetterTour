@@ -8,24 +8,54 @@
   import Contact from './pages/Contact.svelte'
   import Footer from './components/Footer.svelte'
   import Login from './pages/Login.svelte'
+  import PrivateRoute from './components/PrivateRoute.svelte';
+  import ArtistDashboard from './pages/ArtistDashboard.svelte';
+  import VenueDashboard from './pages/VenueDashboard.svelte';
+  
+  import { onMount } from 'svelte';
+  import { fetchGet } from './util/fetchUtil.js';
+  import { userStore } from './stores/userStore.svelte.js';
+
+  onMount(async () => {
+    const response = await fetchGet('/api/home');
+    if (response?.ok) {
+      const { data, type } = await response.json();
+      userStore.user = { ...data, type };
+    }
+    userStore.authChecked = true;
+  });
+
 </script>
 
 <Toaster position="bottom-right"></Toaster>
 
 <main>
   <Router>
+
     <Route path="/">
       <Navbar><LandingPage /></Navbar>
     </Route>
+
     <Route path="/about">
       <Navbar><About /></Navbar>
     </Route>
+
     <Route path="/contact">
       <Navbar><Contact /></Navbar>
     </Route>
-    <Route>
+
+    <Route path="/login">
       <Navbar><Login /></Navbar>
     </Route>
+
+    <PrivateRoute path="/dashboard/artist">
+      <Navbar><ArtistDashboard /></Navbar>
+    </PrivateRoute>
+
+    <PrivateRoute path="/dashboard/venue">
+      <Navbar><VenueDashboard /></Navbar>
+    </PrivateRoute>
+
   </Router>
 </main>
 

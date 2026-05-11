@@ -1,21 +1,43 @@
 <script>
   import { Tabs, ToggleGroup } from '@skeletonlabs/skeleton-svelte';
+  import { Progress } from '@skeletonlabs/skeleton-svelte';
   import { handleLogin, handleSignup, handlePasswordRecovery } from '../util/authService.svelte.js';
   import Footer from '../components/Footer.svelte';
 
   let view = $state('login');
 
-  let usernameInput = $state('');
+  let emailInput = $state('');
   let passwordInput = $state('');
 
-  let signupUsername = $state('');
+  let signupEmail = $state('');
   let signupPasswordOne = $state('');
   let signupPasswordTwo = $state('');
-  let signupEmail = $state('');
 
   let recoveryEmail = $state('');
 
   let userType = $state(['artist']);
+
+  let loginSubmitting = $state(false);
+  let signupSubmitting = $state(false);
+  let recoverySubmitting = $state(false);
+
+  async function onLogin() {
+    loginSubmitting = true;
+    await handleLogin(emailInput, passwordInput);
+    loginSubmitting = false;
+  }
+
+  async function onSignup() {
+    signupSubmitting = true;
+    await handleSignup(signupEmail, signupPasswordOne, signupPasswordTwo, showLogin);
+    signupSubmitting = false;
+  }
+
+  async function onRecovery() {
+    recoverySubmitting = true;
+    await handlePasswordRecovery(recoveryEmail, showLogin);
+    recoverySubmitting = false;
+  }
 
   function showLogin() { view = 'login'; }
 </script>
@@ -43,16 +65,19 @@
       <Tabs.Content value="login">
         <div class="space-y-4 mt-4">
           <label class="label">
-            <span class="label-text text-xl">Username</span>
-            <input class="input text-xl" type="text" bind:value={usernameInput} required />
+            <span class="label-text text-xl">Email</span>
+            <input class="input text-xl" type="email" bind:value={emailInput} required />
           </label>
           <label class="label">
             <span class="label-text text-xl">Password</span>
             <input class="input text-xl" type="password" bind:value={passwordInput} required />
           </label>
-          <button class="btn-primary w-1/2 mx-auto block" type="button" onclick={() => handleLogin(usernameInput, passwordInput)}>
-            Login
+          <button class="btn-primary w-1/2 mx-auto block" type="button" onclick={onLogin} disabled={loginSubmitting}>
+            {loginSubmitting ? 'Logging in...' : 'Login'}
           </button>
+          {#if loginSubmitting}
+            <Progress value={null}><Progress.Track><Progress.Range /></Progress.Track></Progress>
+          {/if}
         </div>
       </Tabs.Content>
 
@@ -72,10 +97,6 @@
             <input class="input text-xl" type="email" bind:value={signupEmail} required />
           </label>
           <label class="label">
-            <span class="label-text text-xl">Username</span>
-            <input class="input text-xl" type="text" bind:value={signupUsername} required />
-          </label>
-          <label class="label">
             <span class="label-text text-xl">Password</span>
             <input class="input text-xl" type="password" bind:value={signupPasswordOne} required />
           </label>
@@ -83,9 +104,12 @@
             <span class="label-text text-xl">Repeat Password</span>
             <input class="input text-xl" type="password" bind:value={signupPasswordTwo} required />
           </label>
-          <button class="btn-primary w-1/2 mx-auto block" type="button" onclick={() => handleSignup(signupEmail, signupUsername, signupPasswordOne, signupPasswordTwo, showLogin)}>
-            Create Account
+          <button class="btn-primary w-1/2 mx-auto block" type="button" onclick={onSignup} disabled={signupSubmitting}>
+            {signupSubmitting ? 'Creating account...' : 'Create Account'}
           </button>
+          {#if signupSubmitting}
+            <Progress value={null}><Progress.Track><Progress.Range /></Progress.Track></Progress>
+          {/if}
         </div>
       </Tabs.Content>
 
@@ -95,9 +119,12 @@
             <span class="label-text text-xl">Email</span>
             <input class="input text-xl" type="email" bind:value={recoveryEmail} required />
           </label>
-          <button class="btn-primary w-1/2 mx-auto block" type="button" onclick={() => handlePasswordRecovery(recoveryEmail, showLogin)}>
-            Send reset link
+          <button class="btn-primary w-1/2 mx-auto block" type="button" onclick={onRecovery} disabled={recoverySubmitting}>
+            {recoverySubmitting ? 'Sending...' : 'Send reset link'}
           </button>
+          {#if recoverySubmitting}
+            <Progress value={null}><Progress.Track><Progress.Range /></Progress.Track></Progress>
+          {/if}
         </div>
       </Tabs.Content>
     </Tabs>

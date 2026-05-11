@@ -33,9 +33,11 @@ router.post('/api/register', authLimiter, async (req, res) => {
 
 router.post('/api/login', authLimiter, async (req, res) => {
   const { email, password } = req.body;
+  console.log('Login attempt:', { email, password });
 
   try {
     const user = findByEmail(email);
+    console.log('User found:', user);
 
     if (!user || !(await comparePassword(password, user.password_hash))) {
       return res.status(401).send('Invalid credentials.');
@@ -57,7 +59,8 @@ router.post('/api/login', authLimiter, async (req, res) => {
     });
 
     res.status(200).send(`${email} logged in successfully`);
-  } catch {
+  } catch (err) {
+    console.error('Login error:', err);
     res.status(500).send('Login failed');
   }
 });

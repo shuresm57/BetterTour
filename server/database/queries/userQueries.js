@@ -3,7 +3,7 @@ import db from '../connection.js';
 export function findByEmail (email) {
   return db.prepare(`
     SELECT * 
-    FROM users 
+    FROM user
     WHERE email = ?
     `).get(email);
 }
@@ -26,9 +26,7 @@ export function findVenueByUserId (userId) {
     `).get(userId);
 }
 
-export function saveUser (userData) {
-  const { email, password } = userData;
-
+export function saveUser (email, password) {
   return db.prepare(`
     INSERT INTO user (email, password_hash)
     VALUES (?, ?);
