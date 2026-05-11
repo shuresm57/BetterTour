@@ -2,7 +2,7 @@
     <title>BetterTour | Contact</title>
   </svelte:head>
 
-  <div class="relative isolate flex-1 flex flex-col justify-center items-center gap-6 pb-76">
+  <div class="relative isolate flex-1 flex flex-col justify-center items-center gap-6 mt-48">
     <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 top-0 -z-10 transform-gpu overflow-hidden blur-3xl">
       <div style="clip-path: polygon(0% 20%, 60% 39%, 60% 0%, 76% 35%, 61% 62%, 44% 34%, 0% 80%);" class="relative left-[calc(20%-5rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[60deg] bg-gradient-to-tr from-[#2563eb] to-[#93c5fd] opacity-50"></div>
     </div>
@@ -17,20 +17,20 @@
      
 
       <label class="label">
-        <span class="text-blue-300">Name</span>
-        <input class="input border-blue-500 focus:ring-blue-500" type="text" placeholder="Your name" />
+        <span class="text-blue-300 text-xl">Name</span>
+        <input class="input border-blue-500 focus:ring-blue-500 text-xl" type="text" placeholder="Your name" />
       </label>
 
       <label class="label">
-        <span class="text-blue-300">Email</span>
-        <input class="input border-blue-500 focus:ring-blue-500" type="email" placeholder="you@example.com" />
+        <span class="text-blue-300 text-xl">Email</span>
+        <input class="input border-blue-500 focus:ring-blue-500 text-xl" type="email" placeholder="you@example.com" />
       </label>
 
       <label class="label">
-        <span class="text-blue-300">Message</span>
-        <textarea class="textarea border-blue-500 focus:ring-blue-500" rows="4" placeholder="Your message..."></textarea>
+        <span class="text-blue-300 text-xl">Message</span>
+        <textarea class="textarea border-blue-500 focus:ring-blue-500 text-xl" rows="4" placeholder="Your message..."></textarea>
       </label>
 
-      <button class="btn bg-blue-500 hover:bg-blue-400 text-white w-full font-bold py-4">Send</button>
+      <button class="btn bg-blue-500 hover:bg-blue-400 text-white w-full font-bold py-4 text-xl">Send</button>
     </div>
   </div>

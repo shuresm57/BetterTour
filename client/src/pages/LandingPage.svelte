@@ -1,3 +1,5 @@
+<script>
+</script>
 <svelte:head>
     <title>BetterTour | Welcome</title>
 </svelte:head>
@@ -11,9 +13,9 @@
     </div>
     <div class="text-center">
       <h1 class="text-5xl font-semibold tracking-tight text-balance text-white sm:text-7xl">Less inbox chaos, much better gigs.</h1>
-      <p class="mt-8 text-lg font-medium text-pretty text-gray-400 sm:text-xl/8">At <span class="text-blue-400">BetterTour</span>, we connect artists and venues faster — no endless email threads, no missed opportunities.</p>
+      <p class="mt-8 text-lg font-medium text-pretty text-gray-400 sm:text-xl/8">At <span class="text-blue-400">BetterTour</span>, we connect artists and venues faster. No endless email threads, no missed opportunities.</p>
       <div class="mt-10 flex items-center justify-center gap-x-6">
-        <a href="/login#register" class="rounded-md bg-blue-500 px-5.5 py-4.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 outline-2 outline-offset-2 outline-blue-500 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Get started</a>
+        <a href="/login#register" class="btn-primary">Get started</a>
       </div>
     </div>
   </div>
