@@ -1,10 +1,10 @@
-import { defineConfig } from 'vite'
-import { svelte } from '@sveltejs/vite-plugin-svelte'
-import tailwindcss from "@tailwindcss/vite"; 
+import { defineConfig } from 'vite';
+import { svelte } from '@sveltejs/vite-plugin-svelte';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-	plugins: [
-		tailwindcss(), 
-		svelte() // <-- Must come after Tailwind
-	],
+  plugins: [
+    tailwindcss(),
+    svelte() // <-- Must come after Tailwind
+  ]
 });

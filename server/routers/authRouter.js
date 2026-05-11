@@ -1,8 +1,13 @@
-import {
-  findByEmail, saveUser,
-  setExpiryTokenByEmail, findUserByToken, updateUserAndToken,
-  findArtistByUserId, findVenueByUserId
-} from '../database/queries.js';
+import { Router } from 'express';
+import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
+import { authLimiter } from '../middleware/rateLimiters.js';
+import { hashPassword, comparePassword } from '../util/passwordUtil.js';
+import { sendWelcomeEmail, sendPasswordRecoveryEmail } from '../util/emailUtil.js';
+import { findByEmail, findArtistByUserId, saveUser } from '../database/queries/userQueries.js';
+import { setExpiryTokenByEmail, findUserByToken, updateUserAndToken } from '../database/queries/authQueries.js';
+
+const router = Router();
 
 router.post('/api/register', authLimiter, async (req, res) => {
   const { password, email } = req.body;
@@ -36,7 +41,7 @@ router.post('/api/login', authLimiter, async (req, res) => {
       return res.status(401).send('Invalid credentials.');
     }
 
-    const type = buildArtistPayload(user) ? 'artist' : 'venue';
+    const type = findArtistByUserId(user.user_id) ? 'artist' : 'venue';
 
     const token = jwt.sign(
       { email: user.email, id: user.user_id, type },
@@ -64,28 +69,6 @@ router.post('/api/logout', (req, res) => {
     sameSite: 'strict'
   });
   res.status(200).send('Logged out successfully');
-});
-
-router.get('/api/home', requireAuth, (req, res) => {
-  const user = findByEmail(req.user.email);
-  if (!user) {
-    return res.status(404).send({ errorMessage: 'User not found' });
-  }
-
-  const payload = buildArtistPayload(user) || buildVenuePayload(user);
-  if (!payload) {
-    return res.status(403).send({ errorMessage: 'No entity linked to this account' });
-  }
-
-  res.send({ data: payload });
-});
-
-router.get('/api/emails/:email', (req, res) => {
-  const found = findByEmail(req.params.email);
-  if (found) {
-    return res.status(200).send({ data: { exists: true } });
-  }
-  res.status(404).send({ data: { exists: false } });
 });
 
 router.post('/api/request-reset', authLimiter, (req, res) => {

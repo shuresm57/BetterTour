@@ -1,11 +1,10 @@
-import db from '../connection.js'
+import db from '../connection.js';
 
-export function getShowLinkCode(linkCode) {
-    return db.prepare(`
+export function getShowLinkCode (linkCode) {
+  return db.prepare(`
         SELECT * FROM show WHERE link_code = ?
     `).run(linkCode);
 }
-
 
 export function updateShow (showId, showData) {
   const { date, schedule, eventName, contactOfDay, status } = showData;
@@ -17,14 +16,14 @@ export function updateShow (showId, showData) {
     `).run(date, schedule, eventName, contactOfDay, status, showId);
 }
 
-export function createShow(showData) {
-     const {
-        date, schedule, eventName,
-        contactOfDay, status
-    } = showData;
+export function createShow (showData) {
+  const {
+    date, schedule, eventName,
+    contactOfDay, status
+  } = showData;
 
-    return db.prepare(`
+  return db.prepare(`
         INSERT INTO show (date, schedule, event_name, contact_of_day, status)
         VALUES (?, ?, ?, ?, ?);    
-    `).run(date, schedule, eventName, contactOfDay, status)
+    `).run(date, schedule, eventName, contactOfDay, status);
 }

@@ -24,7 +24,7 @@ export function deleteShowParticipant (participantId) {
     `).run(participantId);
 }
 
-export function getShowParticipants(showId) {
+export function getShowParticipants (showId) {
   return db.prepare(`
     SELECT sp.role, sp.joined_at, u.email, a.artist_name, v.venue_name
     FROM show_participant sp
@@ -33,4 +33,4 @@ export function getShowParticipants(showId) {
     LEFT JOIN venue v ON sp.venue_id = v.venue_id
     WHERE sp.show_id = ?
   `).all(showId);
-};
+}

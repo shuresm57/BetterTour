@@ -26,7 +26,7 @@ export function findVenueByUserId (userId) {
     `).get(userId);
 }
 
-export function createUser(userData) {
+export function saveUser (userData) {
   const { email, password } = userData;
 
   return db.prepare(`

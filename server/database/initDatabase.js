@@ -6,7 +6,7 @@ db.exec(`
   CREATE TABLE IF NOT EXISTS user (
     user_id ${idPrimaryKey},
     email VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
     reset_token VARCHAR(255),
     reset_token_expiry INTEGER,
     created_at TEXT DEFAULT (datetime('now'))
