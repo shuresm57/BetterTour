@@ -27,3 +27,24 @@ export function createShow (showData) {
         VALUES (?, ?, ?, ?, ?);    
     `).run(date, schedule, eventName, contactOfDay, status);
 }
+
+export function getShowsByArtistId(artistId) {
+  return db.prepare(`
+    SELECT s.*
+    FROM show s
+    JOIN show_participant sp ON s.show_id = sp.show_id
+    WHERE sp.artist_id = ? AND sp.role = 'artist'
+    ORDER BY s.date ASC
+  `).all(artistId);
+}
+
+export function getShowsWithArtistsByVenueId(venueId) {
+  return db.prepare(`
+    SELECT s.*, a.artist_name
+    FROM show s
+    JOIN show_participant sp_venue ON s.show_id = sp_venue.show_id AND sp_venue.venue_id = ? AND sp_venue.role = 'venue'
+    LEFT JOIN show_participant sp_artist ON s.show_id = sp_artist.show_id AND sp_artist.role = 'artist'
+    LEFT JOIN artist a ON sp_artist.artist_id = a.artist_id
+    ORDER BY s.date ASC
+  `).all(venueId);
+}

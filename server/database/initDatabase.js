@@ -14,9 +14,10 @@ db.exec(`
 
   CREATE TABLE IF NOT EXISTS artist (
     artist_id ${idPrimaryKey},
-    artist_name TEXT, 
+    artist_name TEXT,
     bio TEXT,
     contact_email VARCHAR(255),
+    profile_picture_url TEXT,
     created_at TEXT DEFAULT (datetime('now'))
   );
 
@@ -26,6 +27,7 @@ db.exec(`
     address TEXT,
     bio TEXT,
     contact_email VARCHAR(255),
+    profile_picture_url TEXT,
     created_at TEXT DEFAULT (datetime('now'))
   );
 

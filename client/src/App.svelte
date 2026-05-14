@@ -9,9 +9,9 @@
   import Footer from './components/Footer.svelte'
   import Login from './pages/Login.svelte'
   import PrivateRoute from './components/PrivateRoute.svelte';
-  import ArtistDashboard from './pages/ArtistDashboard.svelte';
-  import VenueDashboard from './pages/VenueDashboard.svelte';
-  
+  import ArtistDashboard from './pages/artist/ArtistDashboard.svelte';
+  import VenueDashboard from './pages/venue/VenueDashboard.svelte';
+
   import { onMount } from 'svelte';
   import { fetchGet } from './util/fetchUtil.js';
   import { userStore } from './stores/userStore.svelte.js';
@@ -34,29 +34,31 @@
 
     <Route path="/">
       <Navbar><LandingPage /></Navbar>
+      <Footer />
     </Route>
 
     <Route path="/about">
       <Navbar><About /></Navbar>
+      <Footer />
     </Route>
 
     <Route path="/contact">
       <Navbar><Contact /></Navbar>
+      <Footer />
     </Route>
 
     <Route path="/login">
       <Navbar><Login /></Navbar>
+      <Footer />
     </Route>
 
     <PrivateRoute path="/dashboard/artist">
-      <Navbar><ArtistDashboard /></Navbar>
+      <ArtistDashboard />
     </PrivateRoute>
 
     <PrivateRoute path="/dashboard/venue">
-      <Navbar><VenueDashboard /></Navbar>
+      <VenueDashboard />
     </PrivateRoute>
 
   </Router>
 </main>
-
-<Footer />

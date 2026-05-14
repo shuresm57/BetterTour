@@ -2,18 +2,18 @@ import db from '../connection.js';
 
 export function getArtistRider (artistId) {
   return db.prepare(`
-        SELECT rider_name, rider_url
+        SELECT rider_name AS name, rider_url AS url
         FROM rider
         WHERE artist_id = ?
-    `).get(artistId);
+    `).all(artistId);
 }
 
 export function getVenueRider (venueId) {
   return db.prepare(`
-        SELECT rider_name, rider_url
+        SELECT rider_name AS name, rider_url AS url
         FROM rider
         WHERE venue_id = ?
-    `).run(venueId);
+    `).all(venueId);
 }
 
 export function updateRider (riderId, riderData) {
