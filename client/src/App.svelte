@@ -34,22 +34,18 @@
 
     <Route path="/">
       <Navbar><LandingPage /></Navbar>
-      <Footer />
     </Route>
 
     <Route path="/about">
       <Navbar><About /></Navbar>
-      <Footer />
     </Route>
 
     <Route path="/contact">
       <Navbar><Contact /></Navbar>
-      <Footer />
     </Route>
 
     <Route path="/login">
       <Navbar><Login /></Navbar>
-      <Footer />
     </Route>
 
     <PrivateRoute path="/dashboard/artist">
@@ -62,3 +58,5 @@
 
   </Router>
 </main>
+
+<Footer />

@@ -17,7 +17,6 @@
     const res = await fetchGet('/api/artist/dashboard');
     if (res?.ok) {
       const data = await res.json();
-      console.log('[dashboard] data:', data);
       artist = data.artist;
       shows = data.shows.map(show => ({ ...show, schedule: JSON.parse(show.schedule) }));
       riders = data.riders;

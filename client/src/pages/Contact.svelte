@@ -32,7 +32,7 @@
     <title>BetterTour | Contact</title>
   </svelte:head>
 
-  <div class="relative isolate flex-1 flex flex-col justify-center items-center gap-6 mt-48">
+  <div class="page-wrapper flex-col items-center gap-6">
     <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 top-0 -z-10 transform-gpu overflow-hidden blur-3xl">
       <div style="clip-path: polygon(0% 20%, 60% 39%, 60% 0%, 76% 35%, 61% 62%, 44% 34%, 0% 80%);" class="relative left-[calc(20%-5rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[60deg] bg-gradient-to-tr from-[#2563eb] to-[#93c5fd] opacity-50"></div>
     </div>
