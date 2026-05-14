@@ -1,5 +1,6 @@
 services:
   app:
+    image: ghcr.io/shuresm57/bettertour:latest
     build: .
     ports:
       - "3000:3000"
@@ -8,8 +9,6 @@ services:
       PORT: 3000
       DB_PATH: /data/bettertour.db
       JWT_SECRET: ${JWT_SECRET}
-      EMAIL_USER: ${EMAIL_USER}
-      EMAIL_PASS: ${EMAIL_PASS}
     volumes:
       - db-data:/data
     restart: unless-stopped
