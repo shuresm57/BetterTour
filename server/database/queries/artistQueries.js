@@ -9,12 +9,12 @@ export function getArtistById (artistId) {
 }
 
 export function createArtist (artistData) {
-  const { artistName, bio, contactEmail } = artistData;
+  const { id, artistName, bio, contactEmail } = artistData;
 
   return db.prepare(`
-    INSERT INTO artist (artist_name, bio, contact_email)
-    VALUES (?, ?, ?);
-    `).run(artistName, bio, contactEmail);
+    INSERT INTO artist (artist_id, artist_name, bio, contact_email)
+    VALUES (?, ?, ?, ?);
+    `).run(id, artistName, bio, contactEmail);
 }
 
 export function updateArtist (artistId, artistData) {

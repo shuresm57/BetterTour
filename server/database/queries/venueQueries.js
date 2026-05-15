@@ -9,12 +9,12 @@ export function getVenueById (venueId) {
 }
 
 export function createVenue (venueData) {
-  const { venueName, address, bio, contactEmail } = venueData;
+  const { id, venueName, address, bio, contactEmail } = venueData;
 
   return db.prepare(`
-    INSERT INTO venue (venue_name, address, bio, contact_email)
-    VALUES (?, ?, ?, ?);
-    `).run(venueName, address, bio, contactEmail);
+    INSERT INTO venue (venue_id, venue_name, address, bio, contact_email)
+    VALUES (?, ?, ?, ?, ?);
+    `).run(id, venueName, address, bio, contactEmail);
 }
 
 export function updateVenue (venueId, venueData) {

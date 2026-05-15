@@ -1,6 +1,6 @@
 import db from './connection.js';
 
-const idPrimaryKey = 'INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT';
+const idPrimaryKey = 'TEXT NOT NULL PRIMARY KEY';
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS user (
@@ -44,8 +44,8 @@ db.exec(`
 
   CREATE TABLE IF NOT EXISTS rider (
     rider_id ${idPrimaryKey},
-    artist_id INTEGER REFERENCES artist(artist_id),
-    venue_id INTEGER REFERENCES venue(venue_id),
+    artist_id TEXT REFERENCES artist(artist_id),
+    venue_id TEXT REFERENCES venue(venue_id),
     rider_name VARCHAR(255),
     rider_url TEXT,
     CHECK (
@@ -59,10 +59,10 @@ db.exec(`
 
   CREATE TABLE IF NOT EXISTS show_participant (
     participant_id ${idPrimaryKey},
-    show_id INTEGER NOT NULL REFERENCES show(show_id),
-    user_id INTEGER NOT NULL REFERENCES user(user_id),
-    artist_id INTEGER REFERENCES artist(artist_id),
-    venue_id INTEGER REFERENCES venue(venue_id),
+    show_id TEXT NOT NULL REFERENCES show(show_id),
+    user_id TEXT NOT NULL REFERENCES user(user_id),
+    artist_id TEXT REFERENCES artist(artist_id),
+    venue_id TEXT REFERENCES venue(venue_id),
     role TEXT NOT NULL CHECK (role IN ('artist', 'venue')),
     joined_at TEXT DEFAULT (datetime('now')),
     UNIQUE(show_id, role)
@@ -72,15 +72,15 @@ db.exec(`
   CREATE INDEX idx_show_participant_user_id ON show_participant(user_id);
 
   CREATE TABLE IF NOT EXISTS artist_user (
-    artist_id INTEGER NOT NULL REFERENCES artist(artist_id),
-    user_id INTEGER NOT NULL REFERENCES user(user_id),  -- was users
+    artist_id TEXT NOT NULL REFERENCES artist(artist_id),
+    user_id TEXT NOT NULL REFERENCES user(user_id),  -- was users
     role TEXT NOT NULL DEFAULT 'member',
     PRIMARY KEY (artist_id, user_id)
   );
 
   CREATE TABLE IF NOT EXISTS venue_user (
-    venue_id INTEGER NOT NULL REFERENCES venue(venue_id),
-    user_id INTEGER NOT NULL REFERENCES user(user_id),  -- was users
+    venue_id TEXT NOT NULL REFERENCES venue(venue_id),
+    user_id TEXT NOT NULL REFERENCES user(user_id),  -- was users
     role TEXT NOT NULL DEFAULT 'member',
     PRIMARY KEY (venue_id, user_id)
   );

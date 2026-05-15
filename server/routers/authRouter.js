@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import { authLimiter } from '../middleware/rateLimiters.js';
 import { hashPassword, comparePassword } from '../util/passwordUtil.js';
+import { uuidv7 } from '../util/uuidUtil.js';
 import { sendWelcomeEmail, sendPasswordRecoveryEmail } from '../util/emailUtil.js';
 import { findByEmail, findArtistByUserId, saveUser } from '../database/queries/userQueries.js';
 import { setExpiryTokenByEmail, findUserByToken, updateUserAndToken } from '../database/queries/authQueries.js';
@@ -23,7 +24,7 @@ router.post('/api/register', authLimiter, async (req, res) => {
     }
 
     const hashedPassword = await hashPassword(password);
-    saveUser(email, hashedPassword);
+    saveUser(uuidv7(), email, hashedPassword);
     sendWelcomeEmail(email, email);
     res.status(201).send('User registered successfully');
   } catch {

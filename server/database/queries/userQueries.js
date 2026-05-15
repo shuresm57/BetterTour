@@ -26,9 +26,9 @@ export function findVenueByUserId (userId) {
     `).get(userId);
 }
 
-export function saveUser (email, password) {
+export function saveUser (id, email, password) {
   return db.prepare(`
-    INSERT INTO user (email, password_hash)
-    VALUES (?, ?);
-    `).run(email, password);
+    INSERT INTO user (user_id, email, password_hash)
+    VALUES (?, ?, ?);
+    `).run(id, email, password);
 }

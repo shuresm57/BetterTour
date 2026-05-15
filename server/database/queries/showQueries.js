@@ -18,14 +18,14 @@ export function updateShow (showId, showData) {
 
 export function createShow (showData) {
   const {
-    date, schedule, eventName,
+    id, date, schedule, eventName,
     contactOfDay, status
   } = showData;
 
   return db.prepare(`
-        INSERT INTO show (date, schedule, event_name, contact_of_day, status)
-        VALUES (?, ?, ?, ?, ?);    
-    `).run(date, schedule, eventName, contactOfDay, status);
+        INSERT INTO show (show_id, date, schedule, event_name, contact_of_day, status)
+        VALUES (?, ?, ?, ?, ?, ?);
+    `).run(id, date, schedule, eventName, contactOfDay, status);
 }
 
 export function getShowsByArtistId(artistId) {

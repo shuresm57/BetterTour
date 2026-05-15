@@ -27,19 +27,19 @@ export function updateRider (riderId, riderData) {
 }
 
 export function createArtistRider (artistRiderData) {
-  const { artistId, riderName, riderUrl } = artistRiderData;
+  const { id, artistId, riderName, riderUrl } = artistRiderData;
 
   return db.prepare(`
-        INSERT INTO rider (artist_id, rider_name, rider_url)
-        VALUES (?, ?, ?);    
-    `).run(artistId, riderName, riderUrl);
+        INSERT INTO rider (rider_id, artist_id, rider_name, rider_url)
+        VALUES (?, ?, ?, ?);
+    `).run(id, artistId, riderName, riderUrl);
 }
 
 export function createVenueRider (venueRiderData) {
-  const { venueId, riderName, riderUrl } = venueRiderData;
+  const { id, venueId, riderName, riderUrl } = venueRiderData;
 
   return db.prepare(`
-        INSERT INTO rider (venue_id, rider_name, rider_url)
-        VALUES (?, ?, ?);    
-    `).run(venueId, riderName, riderUrl);
+        INSERT INTO rider (rider_id, venue_id, rider_name, rider_url)
+        VALUES (?, ?, ?, ?);
+    `).run(id, venueId, riderName, riderUrl);
 }

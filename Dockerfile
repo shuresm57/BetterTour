@@ -8,6 +8,7 @@ RUN npm run build
 
 # Stage 2 — run the Express server
 FROM node:24-alpine
+ENV NODE_ENV=production
 WORKDIR /app/server
 COPY server/package*.json ./
 RUN npm install --omit=dev
