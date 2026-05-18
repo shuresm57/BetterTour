@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import { authLimiter } from '../middleware/rateLimiters.js';
 import { hashPassword, comparePassword } from '../util/passwordUtil.js';
-import { uuidv7 } from '../util/uuidUtil.js';
+import { v7 as uuidv7 } from 'uuid';
 import { sendWelcomeEmail, sendPasswordRecoveryEmail } from '../util/emailUtil.js';
 import { findByEmail, findArtistByUserId, saveUser } from '../database/queries/userQueries.js';
 import { setExpiryTokenByEmail, findUserByToken, updateUserAndToken } from '../database/queries/authQueries.js';

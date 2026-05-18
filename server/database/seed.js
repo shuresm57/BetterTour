@@ -1,7 +1,7 @@
 import './initDatabase.js';
 import db from './connection.js';
 import { hashPassword } from '../util/passwordUtil.js';
-import { uuidv7 } from '../util/uuidUtil.js';
+import { v7 as uuidv7 } from 'uuid';
 
 //= ======================
 //      USERS
